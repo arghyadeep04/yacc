@@ -1,0 +1,4 @@
+bison -d .\calculator.y
+flex terminaliser.l
+gcc lex.yy.c calculator.tab.c -w
+.\a.exe
