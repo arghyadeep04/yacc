@@ -8,16 +8,15 @@ extern int yylval;
 
 %%
 S : E {printf("RES = %d\n",$$);return 0;}
-E : E '+' T {$$ = $1 + $3;printf("%d + %d = %d\n",$1,$3,$$);}
-| E '-' T {$$ = $1 - $3;printf("%d - %d = %d\n",$1,$3,$$);}
+E : E '|' T {$$ = $1 || $3;printf("%d OR %d = %d\n",$1,$3,$$);}
 | T {$$=$1;}
 ;
-T : T '*' F {$$ = $1 * $3;printf("%d * %d = %d\n",$1,$3,$$);}
-| T '/' F {if($3==0){printf("Divide by 0 not allowed\n");} else{ $$ = $1 / $3;printf("%d / %d = %d\n",$1,$3,$$);}}
+T : T '&' F {$$ = $1 && $3;printf("%d AND %d = %d\n",$1,$3,$$);}
 | F {$$=$1;}
 ;
 F : ID {$$=$1;}
 | '(' E ')' {$$=$2;}
+| '!' F {$$=!($2);printf("NOT %d = %d\n",$2,$$);}
 ;
 %%
 

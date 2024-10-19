@@ -1,4 +1,4 @@
-bison -d .\calculator.y
+bison -d boolean.y
 flex terminaliser.l
-gcc lex.yy.c calculator.tab.c -w
-.\a.exe
+gcc lex.yy.c boolean.tab.c -w
+./a.exe

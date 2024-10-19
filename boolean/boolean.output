@@ -1,0 +1,190 @@
+Grammar
+
+    0 $accept: S $end
+
+    1 S: E
+
+    2 E: E '|' T
+    3  | T
+
+    4 T: T '&' F
+    5  | F
+
+    6 F: ID
+    7  | '(' E ')'
+    8  | '!' F
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+'!' (33) 8
+'&' (38) 4
+'(' (40) 7
+')' (41) 7
+'|' (124) 2
+error (256)
+ID (258) 6
+
+
+Nonterminals, with rules where they appear
+
+$accept (9)
+    on left: 0
+S (10)
+    on left: 1, on right: 0
+E (11)
+    on left: 2 3, on right: 1 2 7
+T (12)
+    on left: 4 5, on right: 2 3 4
+F (13)
+    on left: 6 7 8, on right: 4 5 8
+
+
+state 0
+
+    0 $accept: . S $end
+
+    ID   shift, and go to state 1
+    '('  shift, and go to state 2
+    '!'  shift, and go to state 3
+
+    S  go to state 4
+    E  go to state 5
+    T  go to state 6
+    F  go to state 7
+
+
+state 1
+
+    6 F: ID .
+
+    $default  reduce using rule 6 (F)
+
+
+state 2
+
+    7 F: '(' . E ')'
+
+    ID   shift, and go to state 1
+    '('  shift, and go to state 2
+    '!'  shift, and go to state 3
+
+    E  go to state 8
+    T  go to state 6
+    F  go to state 7
+
+
+state 3
+
+    8 F: '!' . F
+
+    ID   shift, and go to state 1
+    '('  shift, and go to state 2
+    '!'  shift, and go to state 3
+
+    F  go to state 9
+
+
+state 4
+
+    0 $accept: S . $end
+
+    $end  shift, and go to state 10
+
+
+state 5
+
+    1 S: E .
+    2 E: E . '|' T
+
+    '|'  shift, and go to state 11
+
+    $default  reduce using rule 1 (S)
+
+
+state 6
+
+    3 E: T .
+    4 T: T . '&' F
+
+    '&'  shift, and go to state 12
+
+    $default  reduce using rule 3 (E)
+
+
+state 7
+
+    5 T: F .
+
+    $default  reduce using rule 5 (T)
+
+
+state 8
+
+    2 E: E . '|' T
+    7 F: '(' E . ')'
+
+    '|'  shift, and go to state 11
+    ')'  shift, and go to state 13
+
+
+state 9
+
+    8 F: '!' F .
+
+    $default  reduce using rule 8 (F)
+
+
+state 10
+
+    0 $accept: S $end .
+
+    $default  accept
+
+
+state 11
+
+    2 E: E '|' . T
+
+    ID   shift, and go to state 1
+    '('  shift, and go to state 2
+    '!'  shift, and go to state 3
+
+    T  go to state 14
+    F  go to state 7
+
+
+state 12
+
+    4 T: T '&' . F
+
+    ID   shift, and go to state 1
+    '('  shift, and go to state 2
+    '!'  shift, and go to state 3
+
+    F  go to state 15
+
+
+state 13
+
+    7 F: '(' E ')' .
+
+    $default  reduce using rule 7 (F)
+
+
+state 14
+
+    2 E: E '|' T .
+    4 T: T . '&' F
+
+    '&'  shift, and go to state 12
+
+    $default  reduce using rule 2 (E)
+
+
+state 15
+
+    4 T: T '&' F .
+
+    $default  reduce using rule 4 (T)
